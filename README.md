@@ -6,8 +6,8 @@ Automation Transaction,swap,stake
 
 ## Main Features
 
-- Automatic Running every 09.00 am
-- Supports multiple swap bots: Izumi, Magma, and Rubic.
+- Automatic Running
+- Supports multiple swap bots
 - Allows users to select which bot to execute.
 - Ensures correct gas fee calculation and nonce handling.
 
@@ -17,7 +17,7 @@ Automation Transaction,swap,stake
 
 1. Clone Code
    ```sh
-   git clone https://github.com/jeripangestu/Monad-AIO.git
+   git clone https://github.com/jeripangestu/Monad-V2.git
    ```
 2. Navigate to the project directory:
    ```sh
