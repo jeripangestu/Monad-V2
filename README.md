@@ -2,7 +2,7 @@
 Automation Transaction,swap,stake
 
 
-![Tampilan Bot](image.png)
+![Tampilan Bot](image1.png)
 
 ## Main Features
 
