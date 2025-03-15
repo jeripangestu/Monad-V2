@@ -6,7 +6,7 @@ const fs = require("fs");
 const { loadData, checkProxyIP } = require("../utils");
 const { config } = require("../config");
 
-const RPC_URL = "https://monad-testnet.g.alchemy.com/v2/3DN4EyaWIGRgyimE133RK7jwBvmq-ADi";
+const RPC_URL = "https://testnet-rpc.monad.xyz/";
 const EXPLORER_URL = "https://testnet.monadexplorer.com/tx";
 const WMON_CONTRACT = "0x760AfE86e5de5fa0Ee542fc7B7B713e1c5425701";
 
