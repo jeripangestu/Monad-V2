@@ -6,7 +6,7 @@ const { config } = require("../config");
 const { ethers } = require("ethers");
 const { HttpsProxyAgent } = require("https-proxy-agent");
 
-const RPC_URL = "https://monad-testnet.g.alchemy.com/v2/3DN4EyaWIGRgyimE133RK7jwBvmq-ADi";
+const RPC_URL = "https://testnet-rpc.monad.xyz/";
 
 const solveCaptcha = async () => {
   switch (config.TYPE_CAPTCHA) {
