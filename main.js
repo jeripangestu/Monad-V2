@@ -15,7 +15,7 @@ const availableScripts = [
   { title: "11.Magma Staking (Stake)", value: "magma" },
   { title: "12.Apriori Staking (Stake)", value: "apriori" },
   { title: "13.Kintsu Staking (Stake)", value: "kintsu" },
-  { title: "14.Run automation all options", value: "all" },
+  { title: "14.Run automation selected options", value: "selected" },
   { title: "Exit", value: "exit" },
 ];
 
@@ -36,7 +36,7 @@ const scriptConfigs = {
 
 // Fungsi untuk menampilkan banner dengan warna-warni
 function showBanner() {
-    const banner = `
+  const banner = `
     \x1b[34m____\x1b[0m                           
    \x1b[34m/ __ \\____ __________ ______\x1b[0m    
   \x1b[34m/ / / / __ \`/ ___/ __ \`/ ___/\x1b[0m    
@@ -57,7 +57,7 @@ function showBanner() {
 ====================================================    
     `;
 
-    console.log(banner); 
+  console.log(banner);
 }
 
 async function runScript(scriptName, automated = false) {
@@ -70,11 +70,11 @@ async function runScript(scriptName, automated = false) {
         scriptModule = require("./scripts/rubic");
         break;
       case "ambient":
-        console.log("Run ambients (Swap)...");
+        console.log("Run Ambient (Swap)...");
         scriptModule = require("./scripts/ambient");
         break;
       case "kintsu":
-        console.log("kintsu staking...");
+        console.log("Run Kintsu Staking...");
         scriptModule = require("./scripts/kintsu");
         break;
       case "send":
@@ -82,7 +82,7 @@ async function runScript(scriptName, automated = false) {
         scriptModule = require("./scripts/send");
         break;
       case "faucet":
-        console.log("Run faucet...");
+        console.log("Run Faucet...");
         scriptModule = require("./scripts/faucet");
         break;
       case "deploy":
@@ -101,27 +101,22 @@ async function runScript(scriptName, automated = false) {
         console.log("Run Bebop (Swap)...");
         scriptModule = require("./scripts/bebop");
         break;
-
       case "magma":
         console.log("Run Magma (Stake)...");
         scriptModule = require("./scripts/magma");
         break;
-
       case "izumi":
         console.log("Run Izumi (Swap)...");
         scriptModule = require("./scripts/izumi");
         break;
-
       case "apriori":
         console.log("Run Apriori (Stake)...");
         scriptModule = require("./scripts/apriori");
         break;
-
       case "beanswap":
         console.log("Run Beanswap (Swap)...");
         scriptModule = require("./scripts/beanswap");
         break;
-
       default:
         console.log(`Unknown script: ${scriptName}`);
         return;
@@ -130,7 +125,7 @@ async function runScript(scriptName, automated = false) {
     if (automated && scriptModule.runAutomated) {
       await scriptModule.runAutomated(scriptConfigs[scriptName].cycles, scriptConfigs[scriptName].intervalHours);
     } else if (automated) {
-      console.log(`Warning: ${scriptName} not support automation.`.yellow);
+      console.log(`Warning: ${scriptName} does not support automation.`.yellow);
       await scriptModule.run();
     } else {
       await scriptModule.run();
@@ -140,11 +135,11 @@ async function runScript(scriptName, automated = false) {
   }
 }
 
-async function runAllScriptsSequentially() {
-  const scriptOrder = ["rubic", "izumi", "beanswap", "magma", "apriori", "mono", "kintsu", "uni", "bebop"];
+async function runSelectedScripts(selectedScripts) {
+  const scriptOrder = selectedScripts.length > 0 ? selectedScripts : ["rubic", "izumi", "beanswap", "magma", "apriori", "mono", "kintsu", "uni", "bebop"];
 
   console.log("-".repeat(60));
-  console.log("Automatically run all scripts...".blue);
+  console.log("Automatically run selected scripts...".blue);
   console.log("-".repeat(60));
 
   const response = await prompts([
@@ -174,7 +169,7 @@ async function runAllScriptsSequentially() {
     await runScript(scriptName, true);
 
     if (i < scriptOrder.length - 1) {
-      console.log(`\nCompleted ${scriptName.toUpperCase()}. Wating 5s...`);
+      console.log(`\nCompleted ${scriptName.toUpperCase()}. Waiting 5s...`);
       await delay(5000);
     } else {
       console.log(`\nCompleted ${scriptName.toUpperCase()}.`);
@@ -182,7 +177,7 @@ async function runAllScriptsSequentially() {
   }
 
   console.log("-".repeat(60));
-  console.log("Completed all wallets".green);
+  console.log("Completed all selected scripts".green);
   console.log("-".repeat(60));
 }
 
@@ -192,19 +187,27 @@ async function run() {
   const response = await prompts({
     type: "select",
     name: "script",
-    message: "Chose options:",
+    message: "Choose an option:",
     choices: availableScripts,
   });
 
   const selectedScript = response.script;
 
   if (!selectedScript) {
-    console.log("Invalid options...");
+    console.log("Invalid option...");
     return;
   }
 
-  if (selectedScript === "all") {
-    await runAllScriptsSequentially();
+  if (selectedScript === "selected") {
+    const scriptSelection = await prompts({
+      type: "multiselect",
+      name: "scripts",
+      message: "Select scripts to run (press space to select, enter to confirm):",
+      choices: availableScripts.filter((script) => script.value !== "selected" && script.value !== "exit"),
+      instructions: false,
+    });
+
+    await runSelectedScripts(scriptSelection.scripts);
   } else if (selectedScript === "exit") {
     process.exit(0);
   } else {
@@ -215,5 +218,3 @@ async function run() {
 run().catch((error) => {
   console.error("Error occurred:", error);
 });
-
-// module.exports = { runScript, runAllScriptsSequentially };
