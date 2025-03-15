@@ -6,7 +6,7 @@ const fs = require("fs");
 const { loadData, checkProxyIP } = require("../utils");
 const { config } = require("../config");
 
-const RPC_URL = "https://monad-testnet.g.alchemy.com/v2/3DN4EyaWIGRgyimE133RK7jwBvmq-ADi";
+const RPC_URL = "https://testnet-rpc.monad.xyz/";
 const EXPLORER_URL = "https://testnet.monadexplorer.com/tx/";
 const contractAddress = "0xb2f82D0f38dc453D596Ad40A37799446Cc89274A";
 let provider = new ethers.providers.JsonRpcProvider(RPC_URL);
