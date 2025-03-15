@@ -6,7 +6,7 @@ const axios = require("axios");
 const { loadData, checkProxyIP } = require("../utils");
 const { config } = require("../config");
 
-const RPC_URL = "https://monad-testnet.g.alchemy.com/v2/3DN4EyaWIGRgyimE133RK7jwBvmq-ADi";
+const RPC_URL = "https://testnet-rpc.monad.xyz/";
 const EXPLORER_URL = "https://testnet.monadexplorer.com/tx/";
 const ACCOUNT_SWITCH_DELAY = 3000;
 
