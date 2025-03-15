@@ -8,7 +8,7 @@ const solc = require("solc");
 // Export the run function that will be called from main.js
 exports.run = async function () {
   const chain = {
-    RPC_URL: "https://monad-testnet.g.alchemy.com/v2/3DN4EyaWIGRgyimE133RK7jwBvmq-ADi",
+    RPC_URL: "https://testnet-rpc.monad.xyz/",
     CHAIN_ID: 10143,
     SYMBOL: "MON",
     TX_EXPLORER: "https://testnet.monadexplorer.com/tx/",
